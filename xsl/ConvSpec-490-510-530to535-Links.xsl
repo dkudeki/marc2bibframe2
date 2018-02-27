@@ -255,20 +255,6 @@
         <bf:reproductionOf>
           <xsl:attribute name="rdf:resource"><xsl:value-of select="$recordid"/>#Instance</xsl:attribute>
         </bf:reproductionOf>
-        <xsl:for-each select="marc:subfield[@code='a']">
-          <bf:carrier>
-            <bf:Carrier>
-              <rdfs:label>
-                <xsl:if test="$vXmlLang != ''">
-                  <xsl:attribute name="xml:lang"><xsl:value-of select="$vXmlLang"/></xsl:attribute>
-                </xsl:if>
-                <xsl:call-template name="chopPunctuation">
-                  <xsl:with-param name="chopString" select="."/>
-                </xsl:call-template>
-              </rdfs:label>
-            </bf:Carrier>
-          </bf:carrier>
-        </xsl:for-each>
         <xsl:if test="marc:subfield[@code='b' or @code='c' or @code='d']">
           <bf:provisionActivity>
             <bf:ProvisionActivity>

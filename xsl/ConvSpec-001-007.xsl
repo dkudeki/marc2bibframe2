@@ -705,18 +705,6 @@
                 </bf:Media>
               </bf:media>
             </xsl:if>
-            <xsl:if test="count(../marc:datafield[@tag='338']) = 0">
-              <xsl:if test="$carrier != ''">
-                <bf:carrier>
-                  <bf:Carrier>
-                    <xsl:if test="$carrierUri != ''">
-                      <xsl:attribute name="rdf:about"><xsl:value-of select="$carrierUri"/></xsl:attribute>
-                    </xsl:if>
-                    <rdfs:label><xsl:value-of select="$carrier"/></rdfs:label>
-                  </bf:Carrier>
-                </bf:carrier>
-              </xsl:if>
-            </xsl:if>
             <xsl:if test="$dimensions != ''">
               <bf:dimensions><xsl:value-of select="$dimensions"/></bf:dimensions>
             </xsl:if>
@@ -726,26 +714,6 @@
                   <rdfs:label><xsl:value-of select="$soundContent"/></rdfs:label>
                 </bf:SoundContent>
               </bf:soundContent>
-            </xsl:if>
-            <xsl:if test="$imageBitDepth != ''">
-              <bf:digitalCharacteristic>
-                <bf:DigitalCharacteristic>
-                  <rdf:type>
-                    <xsl:attribute name="rdf:resource"><xsl:value-of select="concat($bflc,'ImageBitDepth')"/></xsl:attribute>
-                  </rdf:type>
-                  <rdfs:label><xsl:value-of select="$imageBitDepth"/></rdfs:label>
-                </bf:DigitalCharacteristic>
-              </bf:digitalCharacteristic>
-            </xsl:if>
-            <xsl:if test="$encodingFormat != ''">
-              <bf:digitalCharacteristic>
-                <bf:DigitalCharacteristic>
-                  <rdf:type>
-                    <xsl:attribute name="rdf:resource"><xsl:value-of select="concat($bf,'EncodingFormat')"/></xsl:attribute>
-                  </rdf:type>
-                  <rdfs:label><xsl:value-of select="$encodingFormat"/></rdfs:label>
-                </bf:DigitalCharacteristic>
-              </bf:digitalCharacteristic>
             </xsl:if>
           </xsl:when>
         </xsl:choose>
@@ -940,18 +908,6 @@
                 </bf:Media>
               </bf:media>
             </xsl:if>
-            <xsl:if test="count(../marc:datafield[@tag='338']) = 0">
-              <xsl:if test="$carrier != ''">
-                <bf:carrier>
-                  <bf:Carrier>
-                    <xsl:if test="$carrierUri != ''">
-                      <xsl:attribute name="rdf:about"><xsl:value-of select="$carrierUri"/></xsl:attribute>
-                    </xsl:if>
-                    <rdfs:label><xsl:value-of select="$carrier"/></rdfs:label>
-                  </bf:Carrier>
-                </bf:carrier>
-              </xsl:if>
-            </xsl:if>
             <xsl:if test="$baseMaterial != ''">
               <bf:baseMaterial>
                 <bf:BaseMaterial>
@@ -1118,15 +1074,6 @@
                   <rdfs:label>microform</rdfs:label>
                 </bf:Media>
               </bf:media>
-            </xsl:if>
-            <xsl:if test="count(../marc:datafield[@tag='338']) = 0">
-              <xsl:if test="$carrierUri != ''">
-                <bf:carrier>
-                  <bf:Carrier>
-                    <xsl:attribute name="rdf:about"><xsl:value-of select="$carrierUri"/></xsl:attribute>
-                  </bf:Carrier>
-                </bf:carrier>
-              </xsl:if>
             </xsl:if>
             <xsl:if test="$polarity != ''">
               <bf:polarity>
@@ -1450,18 +1397,6 @@
                 </bf:Media>
               </bf:media>
             </xsl:if>
-            <xsl:if test="count(../marc:datafield[@tag='338']) = 0">
-              <xsl:if test="$carrier != ''">
-                <bf:carrier>
-                  <bf:Carrier>
-                    <xsl:if test="$carrierUri != ''">
-                      <xsl:attribute name="rdf:about"><xsl:value-of select="$carrierUri"/></xsl:attribute>
-                    </xsl:if>
-                    <rdfs:label><xsl:value-of select="$carrier"/></rdfs:label>
-                  </bf:Carrier>
-                </bf:carrier>
-              </xsl:if>
-            </xsl:if>
             <xsl:if test="$projectionCharacteristic != ''">
               <bf:projectionCharacteristic>
                 <bf:ProjectionCharacteristic>
@@ -1729,18 +1664,6 @@
                 </bf:Media>
               </bf:media>
             </xsl:if>
-            <xsl:if test="count(../marc:datafield[@tag='338']) = 0">
-              <xsl:if test="$carrier != ''">
-                <bf:carrier>
-                  <bf:Carrier>
-                    <xsl:if test="$carrierUri != ''">
-                      <xsl:attribute name="rdf:about"><xsl:value-of select="$carrierUri"/></xsl:attribute>
-                    </xsl:if>
-                    <rdfs:label><xsl:value-of select="$carrier"/></rdfs:label>
-                  </bf:Carrier>
-                </bf:carrier>
-              </xsl:if>
-            </xsl:if>
             <xsl:if test="$playingSpeed != ''">
               <bf:soundCharacteristic>
                 <bf:PlayingSpeed>
@@ -1914,18 +1837,6 @@
                   <xsl:attribute name="rdf:about">http://id.loc.gov/vocabulary/mediaTypes/v</xsl:attribute>
                 </bf:Media>
               </bf:media>
-            </xsl:if>
-            <xsl:if test="count(../marc:datafield[@tag='338']) = 0">
-              <xsl:if test="$carrier != ''">
-                <bf:carrier>
-                  <bf:Carrier>
-                    <xsl:if test="$carrierUri != ''">
-                      <xsl:attribute name="rdf:about"><xsl:value-of select="$carrierUri"/></xsl:attribute>
-                    </xsl:if>
-                    <rdfs:label><xsl:value-of select="$carrier"/></rdfs:label>
-                  </bf:Carrier>
-                </bf:carrier>
-              </xsl:if>
             </xsl:if>
             <xsl:if test="$videoFormat != ''">
               <bf:videoCharacteristic>

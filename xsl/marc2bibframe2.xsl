@@ -22,6 +22,8 @@
   <!-- base for minting URIs -->
   <xsl:param name="baseuri" select="'http://example.org/'"/>
 
+  <xsl:param name="baseinstanceuri" select="'http://www.worldcat.org/oclc/'"/>
+
   <!--
       MARC field in which to find the record ID
       Defaults to subfield $a, to use a different subfield,
@@ -180,7 +182,14 @@
             <xsl:with-param name="serialization" select="$serialization"/>
           </xsl:apply-templates>
           <bf:hasInstance>
-            <xsl:attribute name="rdf:resource"><xsl:value-of select="$recordid"/>#Instance</xsl:attribute>
+            <xsl:choose>
+              <xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
+                <xsl:attribute name="rdf:about"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="rdf:about">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
+              </xsl:otherwise>
+            </xsl:choose>
           </bf:hasInstance>
         </bf:Work>
       </xsl:when>
@@ -190,7 +199,14 @@
     <xsl:choose>
       <xsl:when test="$serialization = 'rdfxml'">
         <bf:Instance>
-          <xsl:attribute name="rdf:about"><xsl:value-of select="$recordid"/>#Instance</xsl:attribute>
+          <xsl:choose>
+            <xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
+              <xsl:attribute name="rdf:about"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:attribute name="rdf:about">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
+            </xsl:otherwise>
+          </xsl:choose>
           <!-- pass fields through conversion specs for Instance properties -->
           <xsl:apply-templates mode="instance">
             <xsl:with-param name="recordid" select="$recordid"/>
@@ -204,11 +220,6 @@
           <bf:instanceOf>
             <xsl:attribute name="rdf:resource"><xsl:value-of select="$recordid"/>#Work</xsl:attribute>
           </bf:instanceOf>
-          <!-- generate hasItem properties -->
-          <xsl:apply-templates mode="hasItem">
-            <xsl:with-param name="recordid" select="$recordid"/>
-            <xsl:with-param name="serialization" select="$serialization"/>
-          </xsl:apply-templates>
         </bf:Instance>
       </xsl:when>
     </xsl:choose>
@@ -219,7 +230,6 @@
   <xsl:template match="text()" mode="adminmetadata"/>
   <xsl:template match="text()" mode="work"/>
   <xsl:template match="text()" mode="instance"/>
-  <xsl:template match="text()" mode="hasItem"/>
 
   <!-- warn about other elements -->
   <xsl:template match="*">

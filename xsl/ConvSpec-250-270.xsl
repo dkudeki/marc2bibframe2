@@ -270,9 +270,9 @@
   
   <xsl:template match="marc:datafield[@tag='260' or @tag='262' or @tag='264']" mode="instance">
     <xsl:param name="serialization" select="'rdfxml'"/>
-    <xsl:apply-templates select="." mode="instance260">
+<!--    <xsl:apply-templates select="." mode="instance260">
       <xsl:with-param name="serialization" select="$serialization"/>
-    </xsl:apply-templates>
+    </xsl:apply-templates>-->
   </xsl:template>
 
   <xsl:template match="marc:datafield[@tag='260' or @tag='262' or @tag='264' or @tag='880']" mode="instance260">

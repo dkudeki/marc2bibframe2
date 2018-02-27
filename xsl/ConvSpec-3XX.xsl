@@ -515,16 +515,6 @@
     </xsl:apply-templates>
   </xsl:template>
 
-  <xsl:template match="marc:datafield[@tag='338']" mode="instance">
-    <xsl:param name="serialization" select="'rdfxml'"/>
-    <xsl:apply-templates select="." mode="rdaResource">
-      <xsl:with-param name="serialization" select="$serialization"/>
-      <xsl:with-param name="pProp">bf:carrier</xsl:with-param>
-      <xsl:with-param name="pResource">bf:Carrier</xsl:with-param>
-      <xsl:with-param name="pUriStem"><xsl:value-of select="$carriers"/></xsl:with-param>
-    </xsl:apply-templates>
-  </xsl:template>
-
   <xsl:template match="marc:datafield[@tag='340']" mode="instance">
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:apply-templates select="." mode="instance340">
@@ -563,11 +553,6 @@
           <xsl:with-param name="serialization" select="$serialization"/>
           <xsl:with-param name="pProp">bf:reductionRatio</xsl:with-param>
           <xsl:with-param name="pResource">bf:ReductionRatio</xsl:with-param>
-        </xsl:apply-templates>
-        <xsl:apply-templates select="marc:subfield[@code='i']" mode="generateProperty">
-          <xsl:with-param name="serialization" select="$serialization"/>
-          <xsl:with-param name="pProp">bf:systemRequirement</xsl:with-param>
-          <xsl:with-param name="pResource">bf:SystemRequirement</xsl:with-param>
         </xsl:apply-templates>
         <xsl:apply-templates select="marc:subfield[@code='j']" mode="generateProperty">
           <xsl:with-param name="serialization" select="$serialization"/>

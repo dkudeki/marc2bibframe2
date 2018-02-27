@@ -750,16 +750,18 @@
             <xsl:if test="document('')/*/local:instrumentCode/*[name() = substring(.,1,2)]">
               <xsl:variable name="vCode" select="substring(.,1,2)"/>
               <xsl:variable name="vCount" select="substring(.,3,2)"/>
-              <xsl:element name="{document('')/*/local:instrumentCode/*[name() = $vCode]/@property}">
-                <xsl:element name="{document('')/*/local:instrumentCode/*[name() = $vCode]/@entity}">
-                  <xsl:for-each select="document('')/*/local:instrumentCode/*[name() = $vCode]/*">
-                    <xsl:element name="{name()}"><xsl:value-of select="."/></xsl:element>
-                  </xsl:for-each>
-                  <xsl:if test="$vCount != ''">
-                    <bf:count><xsl:value-of select="number($vCount)"/></bf:count>
-                  </xsl:if>
+              <xsl:if test="document('')/*/local:instrumentCode/*[name() = $vCode]">
+                <xsl:element name="{document('')/*/local:instrumentCode/*[name() = $vCode]/@property}">
+                  <xsl:element name="{document('')/*/local:instrumentCode/*[name() = $vCode]/@entity}">
+                    <xsl:for-each select="document('')/*/local:instrumentCode/*[name() = $vCode]/*">
+                      <xsl:element name="{name()}"><xsl:value-of select="."/></xsl:element>
+                    </xsl:for-each>
+                    <xsl:if test="$vCount != ''">
+                      <bf:count><xsl:value-of select="number($vCount)"/></bf:count>
+                    </xsl:if>
+                  </xsl:element>
                 </xsl:element>
-              </xsl:element>
+              </xsl:if>
             </xsl:if>
           </xsl:for-each>
         </xsl:when>

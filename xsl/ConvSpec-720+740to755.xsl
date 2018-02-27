@@ -133,19 +133,6 @@
               <xsl:when test="@code='c'">bflc:OperatingSystem</xsl:when>
             </xsl:choose>
           </xsl:variable>
-          <bf:systemRequirement>
-            <xsl:element name="{$vResource}">
-              <rdfs:label><xsl:value-of select="."/></rdfs:label>
-              <xsl:if test="following-sibling::marc:subfield[position()=1]/@code='0'">
-                <xsl:apply-templates select="following-sibling::marc:subfield[position()=1]" mode="subfield0orw">
-                  <xsl:with-param name="serialization" select="$serialization"/>
-                </xsl:apply-templates>
-              </xsl:if>
-              <xsl:apply-templates select="../marc:subfield[@code='2']" mode="subfield2">
-                <xsl:with-param name="serialization" select="$serialization"/>
-              </xsl:apply-templates>
-            </xsl:element>
-          </bf:systemRequirement>
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>

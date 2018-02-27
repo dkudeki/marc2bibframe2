@@ -157,8 +157,8 @@
       generate a recordid base from user config
   -->
   <xsl:template match="marc:record" mode="recordid">
-    <xsl:param name="baseuri" select="'http://example.org/'"/>
-    <xsl:param name="idfield" select="'001'"/>
+    <xsl:param name="baseuri"/>
+    <xsl:param name="idfield"/>
     <xsl:param name="recordno"/>
     <xsl:variable name="tag" select="substring($idfield,1,3)"/>
     <xsl:variable name="subfield">
