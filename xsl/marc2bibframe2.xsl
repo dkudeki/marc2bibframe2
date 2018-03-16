@@ -220,9 +220,31 @@
           <bf:instanceOf>
             <xsl:attribute name="rdf:resource"><xsl:value-of select="$recordid"/>#Work</xsl:attribute>
           </bf:instanceOf>
+		  <bf:hasItem>
+			<xsl:attribute name="rdf:resource">http://hdl.handle.net/2027/<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='u']"/></xsl:attribute>
+		  </bf:hasItem>
         </bf:Instance>
       </xsl:when>
     </xsl:choose>
+
+	<!-- generate main Item entity -->
+	<xsl:choose>
+      <xsl:when test="$serialization = 'rdfxml'">
+		<bf:Item>
+			<xsl:attribute name="rdf:about">http://hdl.handle.net/2027/<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='u']"/></xsl:attribute>
+			<bf:itemOf>
+				<xsl:choose>
+					<xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
+						<xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
+					</xsl:when>
+				</xsl:choose>
+				<xsl:otherwise>
+					<xsl:attribute name="rdf:resource">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
+				</xsl:otherwise>
+			</bf:itemOf>
+		</bf:Item>
+	  </xsl:when>
+	</xsl:choose>
 
   </xsl:template>
 
