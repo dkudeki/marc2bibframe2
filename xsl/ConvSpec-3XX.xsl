@@ -367,7 +367,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="marc:datafield[@tag='300']" mode="instance">
+<!--  <xsl:template match="marc:datafield[@tag='300']" mode="instance">
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:apply-templates select="." mode="instance300">
       <xsl:with-param name="serialization" select="$serialization"/>
@@ -440,7 +440,7 @@
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
-  </xsl:template>
+  </xsl:template>-->
 
   <xsl:template match="marc:datafield[@tag='306']" mode="instance">
     <xsl:param name="serialization" select="'rdfxml'"/>
