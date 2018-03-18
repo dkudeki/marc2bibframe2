@@ -242,13 +242,22 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</bf:itemOf>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='z']">
+			<xsl:when test="./marc:datafield[@tag='974']/marc:subfield[@code='z']">
 				<bf:enumerationAndChronology>
 					<bf:EnumerationAndChronology>
 						<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='z']"/>
 					</bf:EnumerationAndChronology>
 				</bf:enumerationAndChronology>
-			</xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:if test="./marc:datafield[@tag='300']/marc:subfield[@code='a']">
+					<bf:enumerationAndChronology>
+						<bf:EnumerationAndChronology>
+							<xsl:value-of select="./marc:datafield[@tag='300']/marc:subfield[@code='a']"/>
+						</bf:EnumerationAndChronology>
+					</bf:enumerationAndChronology>
+				</xsl:if>
+			</xsl:otherwise>
 			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='s']">
 				<bf:source>
 					<bf:Source>
