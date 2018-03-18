@@ -242,6 +242,13 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</bf:itemOf>
+			<xsl:when test="substring(./marc:datafield[@tag='974']/marc:subfield[@code='z']">
+				<bf:enumerationAndChronology>
+					<bf:EnumerationAndChronology>
+						<xsl:value-of select="substring(./marc:datafield[@tag='974']/marc:subfield[@code='z']"/>
+					</bf:EnumerationAndChronology>
+				</bf:enumerationAndChronology>
+			</xsl:when>
 		</bf:Item>
 	  </xsl:when>
 	</xsl:choose>
