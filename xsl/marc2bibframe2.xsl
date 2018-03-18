@@ -242,22 +242,22 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</bf:itemOf>
-			<xsl:when test="./marc:datafield[@tag='974']/marc:subfield[@code='z']">
-				<bf:enumerationAndChronology>
-					<bf:EnumerationAndChronology>
-						<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='z']"/>
-					</bf:EnumerationAndChronology>
-				</bf:enumerationAndChronology>
-			</xsl:when>
-			<xsl:when test="./marc:datafield[@tag='300']/marc:subfield[@code='a']">
-				<bf:enumerationAndChronology>
-					<bf:EnumerationAndChronology>
-						<xsl:value-of select="./marc:datafield[@tag='300']/marc:subfield[@code='a']"/>
-					</bf:EnumerationAndChronology>
-				</bf:enumerationAndChronology>
-			</xsl:when>
-			<xsl:otherwise>
-			</xsl:otherwise>
+			<xsl:choose>
+				<xsl:when test="./marc:datafield[@tag='974']/marc:subfield[@code='z']">
+					<bf:enumerationAndChronology>
+						<bf:EnumerationAndChronology>
+							<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='z']"/>
+						</bf:EnumerationAndChronology>
+					</bf:enumerationAndChronology>
+				</xsl:when>
+				<xsl:when test="./marc:datafield[@tag='300']/marc:subfield[@code='a']">
+					<bf:enumerationAndChronology>
+						<bf:EnumerationAndChronology>
+							<xsl:value-of select="./marc:datafield[@tag='300']/marc:subfield[@code='a']"/>
+						</bf:EnumerationAndChronology>
+					</bf:enumerationAndChronology>
+				</xsl:when>
+			</xsl:choose>
 			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='s']">
 				<bf:source>
 					<bf:Source>
