@@ -125,7 +125,9 @@
                  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
                  xmlns:bf="http://id.loc.gov/ontologies/bibframe/"
                  xmlns:bflc="http://id.loc.gov/ontologies/bflc/"
-                 xmlns:madsrdf="http://www.loc.gov/mads/rdf/v1#">
+                 xmlns:madsrdf="http://www.loc.gov/mads/rdf/v1#"
+				 xmlns:dct="http://purl.org/dc/terms/"
+				 xmlns:htrc="http://wcsa.htrc.illinois.edu/">
 
           <xsl:apply-templates>
             <xsl:with-param name="serialization" select="$serialization"/>
