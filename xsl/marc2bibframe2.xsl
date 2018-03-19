@@ -8,6 +8,8 @@
                 xmlns:madsrdf="http://www.loc.gov/mads/rdf/v1#"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:date="http://exslt.org/dates-and-times"
+				xmlns:dct="http://purl.org/dc/terms/"
+				xmlns:htrc="http://wcsa.htrc.illinois.edu/"
                 extension-element-prefixes="date"
                 exclude-result-prefixes="xsl marc">
 
@@ -242,20 +244,38 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</bf:itemOf>
+			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='r']">
+				<bf:usageAndAccessPolicy>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/rights_database#Attributes_<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='r']"/></xsl:attribute>
+				</bf:usageAndAccessPolicy>
+				<dct:accessRights>
+					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='r']"/>
+				</dct:accessRights>
+			</xsl:if>
+			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='s']">
+				<htrc:digitizationAgent>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/institution_identifiers#<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='s']"/></xsl:attribute>
+				</htrc:digitizationAgent>
+			</xsl:if>
+			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='c']">
+				<htrc:contentProviderAgent>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/institution_identifiers#<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='c']"/></xsl:attribute>
+				</htrc:contentProviderAgent>
+			</xsl:if>
+			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='y']">
+				<dct:created>
+					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='y']"/>-00-00
+				</dct:created>
+			</xsl:if>
+			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='q']">
+				<htrc:rightsReason>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/rights_database#Reasons_<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='q']"/></xsl:attribute>
+				</htrc:rightsReason>
+			</xsl:if>
 			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='z']">
 				<bf:enumerationAndChronology>
 					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='z']"/>
 				</bf:enumerationAndChronology>
-			</xsl:if>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='s']">
-				<bf:source>
-					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='s']"/>
-				</bf:source>
-			</xsl:if>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='r']">
-				<bf:status>
-					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='r']"/>
-				</bf:status>
 			</xsl:if>
 		</bf:Item>
 	  </xsl:when>
