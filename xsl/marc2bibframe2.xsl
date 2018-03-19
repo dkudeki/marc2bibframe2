@@ -265,9 +265,7 @@
 				</htrc:contentProviderAgent>
 			</xsl:if>
 			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='y']">
-				<dct:created>
-					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='y']"/>-00-00
-				</dct:created>
+				<dct:created><xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='y']"/>-00-00</dct:created>
 			</xsl:if>
 			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='q']">
 				<htrc:rightsReason>
