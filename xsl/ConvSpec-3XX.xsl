@@ -367,11 +367,13 @@
     </xsl:choose>
   </xsl:template>
   
-<!--  <xsl:template match="marc:datafield[@tag='300']" mode="instance">
+  <xsl:template match="marc:datafield[@tag='300']" mode="instance">
     <xsl:param name="serialization" select="'rdfxml'"/>
-    <xsl:apply-templates select="." mode="instance300">
-      <xsl:with-param name="serialization" select="$serialization"/>
-    </xsl:apply-templates>
+	<xsl:if test="substring($issuance,38)='mono'">
+		<xsl:apply-templates select="." mode="instance300">
+		<xsl:with-param name="serialization" select="$serialization"/>
+		</xsl:apply-templates>
+	</xsl:if>
   </xsl:template>
 
   <xsl:template match="marc:datafield[@tag='300' or @tag='880']" mode="instance300">
@@ -440,7 +442,7 @@
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
-  </xsl:template>-->
+  </xsl:template>
 
   <xsl:template match="marc:datafield[@tag='306']" mode="instance">
     <xsl:param name="serialization" select="'rdfxml'"/>
