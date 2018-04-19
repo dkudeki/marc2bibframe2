@@ -224,63 +224,76 @@
           <bf:instanceOf>
             <xsl:attribute name="rdf:resource"><xsl:value-of select="$recordid"/>#Work</xsl:attribute>
           </bf:instanceOf>
-		  <bf:hasItem>
-			<xsl:attribute name="rdf:resource">http://hdl.handle.net/2027/<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='u']"/></xsl:attribute>
-		  </bf:hasItem>
+          <xsl:apply-templates select="./marc:datafield[@tag='974']" mode="hasItem"/>
         </bf:Instance>
       </xsl:when>
     </xsl:choose>
 
-	<!-- generate main Item entity -->
-	<xsl:choose>
-      <xsl:when test="$serialization = 'rdfxml'">
+		<!-- generate main Item entity -->
+		<xsl:choose>
+			<xsl:when test="$serialization = 'rdfxml'">
+				<xsl:apply-templates select="./marc:datafield[@tag='974']" mode="item">
+					<xsl:with-param name="recordid" select="$recordid"/>
+				</xsl:apply-templates>
+		  </xsl:when>
+		</xsl:choose>
+
+  </xsl:template>
+
+	<xsl:template match="marc:datafield[@tag='974']" mode="hasItem">
+		<bf:hasItem>
+			<xsl:attribute name="rdf:resource">http://hdl.handle.net/2027/<xsl:value-of select="./marc:subfield[@code='u']"/></xsl:attribute>
+		</bf:hasItem>
+	</xsl:template>
+
+  <xsl:template match="marc:datafield[@tag='974']" mode="item">
+  	<xsl:param name="recordid"/>
+
+  	<!-- generate main Item entity -->
 		<bf:Item>
-			<xsl:attribute name="rdf:about">http://hdl.handle.net/2027/<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='u']"/></xsl:attribute>
+			<xsl:attribute name="rdf:about">http://hdl.handle.net/2027/<xsl:value-of select="./marc:subfield[@code='u']"/></xsl:attribute>
 			<bf:itemOf>
 				<xsl:choose>
-					<xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
-						<xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
+					<xsl:when test="substring(../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
+						<xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:attribute name="rdf:resource">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
 					</xsl:otherwise>
 				</xsl:choose>
 			</bf:itemOf>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='r']">
+			<xsl:if test="./marc:subfield[@code='r']">
 				<bf:usageAndAccessPolicy>
-					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/rights_database#Attributes_<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='r']"/></xsl:attribute>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/rights_database#Attributes_<xsl:value-of select="./marc:subfield[@code='r']"/></xsl:attribute>
 				</bf:usageAndAccessPolicy>
 				<dct:accessRights>
-					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='r']"/>
+					<xsl:value-of select="./marc:subfield[@code='r']"/>
 				</dct:accessRights>
 			</xsl:if>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='s']">
+			<xsl:if test="./marc:subfield[@code='s']">
 				<htrc:digitizationAgent>
-					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/institution_identifiers#<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='s']"/></xsl:attribute>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/institution_identifiers#<xsl:value-of select="./marc:subfield[@code='s']"/></xsl:attribute>
 				</htrc:digitizationAgent>
 			</xsl:if>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='c']">
+			<xsl:if test="./marc:subfield[@code='c']">
 				<htrc:contentProviderAgent>
-					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/institution_identifiers#<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='c']"/></xsl:attribute>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/institution_identifiers#<xsl:value-of select="./marc:subfield[@code='c']"/></xsl:attribute>
 				</htrc:contentProviderAgent>
 			</xsl:if>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='y']">
-				<dct:created><xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='y']"/>-00-00</dct:created>
+			<xsl:if test="./marc:subfield[@code='y']">
+				<dct:created><xsl:value-of select="./marc:subfield[@code='y']"/>-00-00</dct:created>
 			</xsl:if>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='q']">
+			<xsl:if test="./marc:subfield[@code='q']">
 				<htrc:rightsReason>
-					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/rights_database#Reasons_<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='q']"/></xsl:attribute>
+					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/rights_database#Reasons_<xsl:value-of select="./marc:subfield[@code='q']"/></xsl:attribute>
 				</htrc:rightsReason>
 			</xsl:if>
-			<xsl:if test="./marc:datafield[@tag='974']/marc:subfield[@code='z']">
+			<xsl:if test="./marc:subfield[@code='z']">
 				<bf:enumerationAndChronology>
-					<xsl:value-of select="./marc:datafield[@tag='974']/marc:subfield[@code='z']"/>
+					<xsl:value-of select="./marc:subfield[@code='z']"/>
 				</bf:enumerationAndChronology>
 			</xsl:if>
 		</bf:Item>
-	  </xsl:when>
-	</xsl:choose>
-
   </xsl:template>
 
   <!-- suppress text from unmatched nodes -->
