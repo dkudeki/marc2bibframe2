@@ -188,7 +188,11 @@
           <bf:hasInstance>
             <xsl:choose>
               <xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
-                <xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
+                <xsl:for-each select="./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')]">
+                  <xsl:if test="position() = last()">
+                    <xsl:attribute name="rdf:about"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(.,8)"/></xsl:attribute>
+                  </xsl:if>
+                </xsl:for-each>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:attribute name="rdf:resource">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
@@ -205,7 +209,11 @@
         <bf:Instance>
           <xsl:choose>
             <xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
-              <xsl:attribute name="rdf:about"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
+              <xsl:for-each select="./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')]">
+                <xsl:if test="position() = last()">
+                  <xsl:attribute name="rdf:about"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(.,8)"/></xsl:attribute>
+                </xsl:if>
+              </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
               <xsl:attribute name="rdf:about">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
@@ -255,8 +263,12 @@
 			<bf:itemOf>
 				<xsl:choose>
 					<xsl:when test="substring(../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
-						<xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],8)"/></xsl:attribute>
-					</xsl:when>
+            <xsl:for-each select="../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')]">
+              <xsl:if test="position() = last()">
+                <xsl:attribute name="rdf:about"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(.,8)"/></xsl:attribute>
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:when>
 					<xsl:otherwise>
 						<xsl:attribute name="rdf:resource">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
 					</xsl:otherwise>
