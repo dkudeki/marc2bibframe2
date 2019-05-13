@@ -189,7 +189,7 @@
             <xsl:choose>
               <xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
                 <xsl:for-each select="./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')]">
-                  <xsl:if test="position() = first()">
+                  <xsl:if test="position() = '1'">
                     <xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(.,8)"/></xsl:attribute>
                   </xsl:if>
                 </xsl:for-each>
@@ -210,7 +210,7 @@
           <xsl:choose>
             <xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
               <xsl:for-each select="./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')]">
-                <xsl:if test="position() = first()">
+                <xsl:if test="position() = '1'">
                   <xsl:attribute name="rdf:about"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(.,8)"/></xsl:attribute>
                 </xsl:if>
               </xsl:for-each>
@@ -264,7 +264,7 @@
 				<xsl:choose>
 					<xsl:when test="substring(../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
             <xsl:for-each select="../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')]">
-              <xsl:if test="position() = first()">
+              <xsl:if test="position() = '1'">
                 <xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(.,8)"/></xsl:attribute>
               </xsl:if>
             </xsl:for-each>
