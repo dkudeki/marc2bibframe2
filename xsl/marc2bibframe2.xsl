@@ -305,6 +305,11 @@
 					<xsl:value-of select="./marc:subfield[@code='z']"/>
 				</bf:enumerationAndChronology>
 			</xsl:if>
+      <xsl:if test="./marc:subfield[@code='d']">
+        <htrc:lastRightsUpdateDate>
+          <xsl:value-of select="./marc:subfield[@code='d']"/>
+        </htrc:lastRightsUpdateDate>
+      </xsl:if>
 		</bf:Item>
   </xsl:template>
 
