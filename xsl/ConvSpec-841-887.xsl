@@ -13,7 +13,7 @@
       Conversion specs for 841-887
   -->
 
-  <xsl:template match="marc:datafield[@tag='856']" mode="work">
+<!--  <xsl:template match="marc:datafield[@tag='856']" mode="work">
     <xsl:param name="recordid"/>
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:if test="marc:subfield[@code='u'] and
@@ -85,7 +85,7 @@
         </xsl:when>
       </xsl:choose>
     </xsl:if>
-  </xsl:template>
+  </xsl:template>-->
           
   <xsl:template match="marc:datafield[@tag='850' or @tag='852']" mode="hasItem">
     <xsl:param name="recordid"/>
@@ -164,7 +164,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="marc:datafield[@tag='856']" mode="hasItem">
+<!--  <xsl:template match="marc:datafield[@tag='856']" mode="hasItem">
     <xsl:param name="recordid"/>
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:if test="marc:subfield[@code='u'] and
@@ -222,7 +222,7 @@
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
-  </xsl:template>
+  </xsl:template>-->
 
   
 </xsl:stylesheet>
