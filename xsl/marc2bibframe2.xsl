@@ -195,7 +195,6 @@
           <xsl:apply-templates mode="work">
             <xsl:with-param name="recordid" select="$recordid"/>
             <xsl:with-param name="serialization" select="$serialization"/>
-            <xsl:with-param name="instanceid" select="$instanceid"/>
           </xsl:apply-templates>
           <bf:hasInstance>
             <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
@@ -301,6 +300,11 @@
         </htrc:lastRightsUpdateDate>
       </xsl:if>
 		</bf:Item>
+
+    <xsl:apply-templates mode="item">
+      <xsl:with-param name="serialization" select="$serialization"/>
+      <xsl:with-param name="instanceid" select="$instanceid"/>
+    </xsl:apply-templates>
   </xsl:template>
 
   <!-- suppress text from unmatched nodes -->
