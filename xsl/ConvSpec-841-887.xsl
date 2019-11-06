@@ -13,8 +13,7 @@
       Conversion specs for 841-887
   -->
 
-  <xsl:template match="marc:datafield[@tag='856']" mode="work">
-    <xsl:param name="recordid"/>
+  <xsl:template match="marc:datafield[@tag='856']" mode="item">
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:param name="instanceid"/>
     <xsl:if test="marc:subfield[@code='u'] and
@@ -28,47 +27,16 @@
       <xsl:variable name="vItemUri"><xsl:value-of select="marc:subfield[@code='u']"/></xsl:variable>
       <xsl:choose>
         <xsl:when test="$serialization = 'rdfxml'">
-          <bf:hasInstance>
-            <bf:Instance>
-              <xsl:attribute name="rdf:about"><xsl:value-of select="$instanceid"/></xsl:attribute>
-              <rdf:type>
-                <xsl:attribute name="rdf:resource"><xsl:value-of select="concat($bf,'Electronic')"/></xsl:attribute>
-              </rdf:type>
-              <xsl:if test="../marc:datafield[@tag='245']">
-                <bf:title>
-                  <xsl:apply-templates mode="title245" select="../marc:datafield[@tag='245']">
-                    <xsl:with-param name="serialization" select="$serialization"/>
-                    <xsl:with-param name="label">
-                      <xsl:apply-templates mode="concat-nodes-space"
-                                           select="../marc:datafield[@tag='245']/marc:subfield[@code='a' or
-                                                   @code='b' or
-                                                   @code='f' or 
-                                                   @code='g' or
-                                                   @code='k' or
-                                                   @code='n' or
-                                                   @code='p' or
-                                                   @code='s']"/>
-                    </xsl:with-param>
-                  </xsl:apply-templates>
-                </bf:title>
-              </xsl:if>
-              <bf:hasItem>
-                <bf:Item>
-                  <xsl:attribute name="rdf:about"><xsl:value-of select="$vItemUri"/></xsl:attribute>
-                  <xsl:apply-templates select="." mode="locator856">
-                    <xsl:with-param name="serialization" select="$serialization"/>
-                    <xsl:with-param name="pProp">bf:electronicLocator</xsl:with-param>
-                  </xsl:apply-templates>
-                  <bf:itemOf>
-                    <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
-                  </bf:itemOf>
-                </bf:Item>
-              </bf:hasItem>
-              <bf:instanceOf>
-                <xsl:attribute name="rdf:resource"><xsl:value-of select="$recordid"/>#Work</xsl:attribute>
-              </bf:instanceOf>
-            </bf:Instance>
-          </bf:hasInstance>
+          <bf:Item>
+            <xsl:attribute name="rdf:about"><xsl:value-of select="$vItemUri"/></xsl:attribute>
+            <xsl:apply-templates select="." mode="locator856">
+              <xsl:with-param name="serialization" select="$serialization"/>
+              <xsl:with-param name="pProp">bf:electronicLocator</xsl:with-param>
+            </xsl:apply-templates>
+            <bf:itemOf>
+              <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
+            </bf:itemOf>
+          </bf:Item>
         </xsl:when>
       </xsl:choose>
     </xsl:if>
@@ -86,6 +54,18 @@
           </xsl:apply-templates>
         </xsl:when>
       </xsl:choose>
+    </xsl:if>
+    <xsl:if test="marc:subfield[@code='u'] and
+                  not(starts-with(marc:subfield[@code='u'],'http://hdl.handle.net/2027/')) and
+                  not(starts-with(marc:subfield[@code='u'],'https://hdl.handle.net/2027/')) and
+                  (@ind2='1' or
+                  (@ind2 != '0' and @ind2 != '2' and
+                  substring(../marc:leader,7,1) != 'm' and
+                  substring(../marc:controlfield[@tag='008'],24,1) != 'o' and
+                  substring(../marc:controlfield[@tag='008'],24,1) != 's'))">
+      <bf:hasItem>
+        <xsl:attribute name="rdf:resource"><xsl:value-of select="marc:subfield[@code='u']"/></xsl:attribute>
+      </bf:hasItem>
     </xsl:if>
   </xsl:template>
           
