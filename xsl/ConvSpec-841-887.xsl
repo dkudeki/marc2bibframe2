@@ -15,8 +15,8 @@
 
   <xsl:template match="marc:datafield[@tag='856']" mode="work">
     <xsl:param name="recordid"/>
-    <xsl:param name="instanceid"/>
     <xsl:param name="serialization" select="'rdfxml'"/>
+    <xsl:param name="instanceid"/>
     <xsl:if test="marc:subfield[@code='u'] and
                   not(starts-with(marc:subfield[@code='u'],'http://hdl.handle.net/2027/')) and
                   not(starts-with(marc:subfield[@code='u'],'https://hdl.handle.net/2027/')) and
