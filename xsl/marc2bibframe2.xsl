@@ -232,6 +232,11 @@
 				<xsl:apply-templates select="./marc:datafield[@tag='974']" mode="item">
 					<xsl:with-param name="recordid" select="$recordid"/>
 				</xsl:apply-templates>
+
+        <xsl:apply-templates mode="item">
+          <xsl:with-param name="serialization" select="$serialization"/>
+          <xsl:with-param name="instanceid" select="$instanceid"/>
+        </xsl:apply-templates>
 		  </xsl:when>
 		</xsl:choose>
 
@@ -300,11 +305,6 @@
         </htrc:lastRightsUpdateDate>
       </xsl:if>
 		</bf:Item>
-
-    <xsl:apply-templates mode="item">
-      <xsl:with-param name="serialization" select="$serialization"/>
-      <xsl:with-param name="instanceid" select="$instanceid"/>
-    </xsl:apply-templates>
   </xsl:template>
 
   <!-- suppress text from unmatched nodes -->
