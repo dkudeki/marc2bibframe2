@@ -15,6 +15,7 @@
 
   <xsl:template match="marc:datafield[@tag='856']" mode="work">
     <xsl:param name="recordid"/>
+    <xsl:param name="instanceid"/>
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:if test="marc:subfield[@code='u'] and
                   not(starts-with(marc:subfield[@code='u'],'http://hdl.handle.net/2027/')) and
@@ -24,13 +25,12 @@
                   substring(../marc:leader,7,1) != 'm' and
                   substring(../marc:controlfield[@tag='008'],24,1) != 'o' and
                   substring(../marc:controlfield[@tag='008'],24,1) != 's'))">
-      <xsl:variable name="vInstanceUri"><xsl:value-of select="$recordid"/>#Instance<xsl:value-of select="@tag"/>-<xsl:value-of select="position()"/></xsl:variable>
       <xsl:variable name="vItemUri"><xsl:value-of select="marc:subfield[@code='u']"/></xsl:variable>
       <xsl:choose>
         <xsl:when test="$serialization = 'rdfxml'">
           <bf:hasInstance>
             <bf:Instance>
-              <xsl:attribute name="rdf:about"><xsl:value-of select="$vInstanceUri"/></xsl:attribute>
+              <xsl:attribute name="rdf:about"><xsl:value-of select="$instanceid"/></xsl:attribute>
               <rdf:type>
                 <xsl:attribute name="rdf:resource"><xsl:value-of select="concat($bf,'Electronic')"/></xsl:attribute>
               </rdf:type>
@@ -60,7 +60,7 @@
                     <xsl:with-param name="pProp">bf:electronicLocator</xsl:with-param>
                   </xsl:apply-templates>
                   <bf:itemOf>
-                    <xsl:attribute name="rdf:resource"><xsl:value-of select="$vInstanceUri"/></xsl:attribute>
+                    <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
                   </bf:itemOf>
                 </bf:Item>
               </bf:hasItem>

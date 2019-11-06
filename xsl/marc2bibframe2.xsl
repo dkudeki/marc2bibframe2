@@ -198,6 +198,11 @@
             <xsl:with-param name="recordid" select="$recordid"/>
             <xsl:with-param name="serialization" select="$serialization"/>
           </xsl:apply-templates>
+          <xsl:apply-templates mode="work">
+            <xsl:with-param name="recordid" select="$recordid"/>
+            <xsl:with-param name="instanceid" select="$instanceid"/>
+            <xsl:with-param name="serialization" select="$serialization"/>
+          </xsl:apply-templates>
           <bf:hasInstance>
             <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
           </bf:hasInstance>
