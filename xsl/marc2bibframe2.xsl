@@ -165,9 +165,7 @@
     <xsl:variable name="instanceid">
       <xsl:choose>
         <xsl:when test="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
-          <xsl:if test="position() = '1'">
-            <xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')][1],8)"/>
-          </xsl:if>
+          <xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(./marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')][1],8)"/>
         </xsl:when>
         <xsl:otherwise>
           _:b<xsl:value-of select="substring($recordid,20)"/>
