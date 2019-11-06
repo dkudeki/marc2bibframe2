@@ -13,10 +13,12 @@
       Conversion specs for 841-887
   -->
 
-<!--  <xsl:template match="marc:datafield[@tag='856']" mode="work">
+  <xsl:template match="marc:datafield[@tag='856']" mode="work">
     <xsl:param name="recordid"/>
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:if test="marc:subfield[@code='u'] and
+                  (not(starts-with(marc:subfield[@code='u'],'http://hdl.handle.net/2027/')) or
+                  not(starts-with(marc:subfield[@code='u'],'https://hdl.handle.net/2027/'))) and
                   (@ind2='1' or
                   (@ind2 != '0' and @ind2 != '2' and
                   substring(../marc:leader,7,1) != 'm' and
@@ -85,7 +87,7 @@
         </xsl:when>
       </xsl:choose>
     </xsl:if>
-  </xsl:template>-->
+  </xsl:template>
           
   <xsl:template match="marc:datafield[@tag='850' or @tag='852']" mode="hasItem">
     <xsl:param name="recordid"/>
@@ -164,7 +166,7 @@
     </xsl:choose>
   </xsl:template>
 
-<!--  <xsl:template match="marc:datafield[@tag='856']" mode="hasItem">
+  <xsl:template match="marc:datafield[@tag='856']" mode="hasItem">
     <xsl:param name="recordid"/>
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:if test="marc:subfield[@code='u'] and
@@ -222,7 +224,7 @@
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
-  </xsl:template>-->
+  </xsl:template>
 
   
 </xsl:stylesheet>
