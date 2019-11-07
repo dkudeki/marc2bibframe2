@@ -47,12 +47,19 @@
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:if test="marc:subfield[@code='u'] and @ind2='2'">
       <xsl:choose>
-        <xsl:when test="$serialization = 'rdfxml'">
+        <xsl:when test="$serialization = 'rdfxml' and marc:subfield[@code='z' or @code='y' or @code='3']">
           <xsl:apply-templates select="." mode="locator856">
             <xsl:with-param name="serialization" select="$serialization"/>
             <xsl:with-param name="pProp">bf:supplementaryContent</xsl:with-param>
           </xsl:apply-templates>
         </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="marc:subfield[@code='u']">
+            <xsl:element name="bf:supplementaryContent">
+              <xsl:attribute name="rdf:resource"><xsl:value-of select="."/></xsl:attribute>
+            </xsl:element>
+          </xsl:for-each>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
     <xsl:if test="marc:subfield[@code='u'] and
@@ -178,25 +185,18 @@
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:param name="pProp"/>
     <xsl:choose>
-      <xsl:when test="$serialization='rdfxml'">
+      <xsl:when test="$serialization='rdfxml' and marc:subfield[@code='z' or @code='y' or @code='3']">
         <xsl:for-each select="marc:subfield[@code='u']">
           <xsl:element name="{$pProp}">
-            <xsl:choose>
-              <xsl:when test="../marc:subfield[@code='z' or @code='y' or @code='3']">
-                <rdfs:Resource>
-                  <xsl:for-each select="../marc:subfield[@code='z' or @code='y' or @code='3']">
-                    <bf:note>
-                      <bf:Note>
-                        <rdfs:label><xsl:value-of select="."/></rdfs:label>
-                      </bf:Note>
-                    </bf:note>
-                  </xsl:for-each>
-                </rdfs:Resource>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:attribute name="rdf:resource"><xsl:value-of select="."/></xsl:attribute>
-              </xsl:otherwise>
-            </xsl:choose>
+            <rdfs:Resource>
+              <xsl:for-each select="../marc:subfield[@code='z' or @code='y' or @code='3']">
+                <bf:note>
+                  <bf:Note>
+                    <rdfs:label><xsl:value-of select="."/></rdfs:label>
+                  </bf:Note>
+                </bf:note>
+              </xsl:for-each>
+            </rdfs:Resource>
           </xsl:element>
         </xsl:for-each>
       </xsl:when>
