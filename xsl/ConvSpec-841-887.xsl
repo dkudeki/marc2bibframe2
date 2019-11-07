@@ -190,7 +190,7 @@
       <xsl:when test="$serialization='rdfxml' and marc:subfield[@code='z' or @code='y' or @code='3']">
         <xsl:for-each select="marc:subfield[@code='u']">
           <xsl:element name="{$pProp}">
-            <xsl:if test="{$pProp} = 'bf:supplementaryContent'">
+            <xsl:if test="$pProp = 'bf:supplementaryContent'">
               <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
             </xsl:if>
             <rdfs:Resource>
