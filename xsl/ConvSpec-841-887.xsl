@@ -191,8 +191,8 @@
     <xsl:choose>
       <xsl:when test="$serialization='rdfxml'">
         <xsl:for-each select="marc:subfield[@code='u']">
-          <xsl:element name="{$pProp}">
-            <xsl:if test="../marc:subfield[@code='z' or @code='y' or @code='3']">
+          <xsl:if test="../marc:subfield[@code='z' or @code='y' or @code='3']">
+            <xsl:element name="{$pProp}">
               <rdfs:Resource>
                 <xsl:if test="$pProp = 'bf:supplementaryContent'">
                   <bflc:locator>
@@ -207,8 +207,8 @@
                   </bf:note>
                 </xsl:for-each>
               </rdfs:Resource>
-            </xsl:if>
-          </xsl:element>
+            </xsl:element>
+          </xsl:if>
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
