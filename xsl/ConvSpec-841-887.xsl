@@ -51,6 +51,7 @@
           <xsl:apply-templates select="." mode="locator856">
             <xsl:with-param name="serialization" select="$serialization"/>
             <xsl:with-param name="pProp">bf:supplementaryContent</xsl:with-param>
+            <xsl:with-param name="instanceid" select="$instanceid"/>
           </xsl:apply-templates>
         </xsl:when>
         <xsl:otherwise>
@@ -184,10 +185,14 @@
   <xsl:template match="marc:datafield[@tag='856']" mode="locator856">
     <xsl:param name="serialization" select="'rdfxml'"/>
     <xsl:param name="pProp"/>
+    <xsl:param name="instanceid"/>
     <xsl:choose>
       <xsl:when test="$serialization='rdfxml' and marc:subfield[@code='z' or @code='y' or @code='3']">
         <xsl:for-each select="marc:subfield[@code='u']">
           <xsl:element name="{$pProp}">
+            <xsl:if test="{$pProp} = 'bf:supplementaryContent'">
+              <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
+            </xsl:if>
             <rdfs:Resource>
               <xsl:for-each select="../marc:subfield[@code='z' or @code='y' or @code='3']">
                 <bf:note>
