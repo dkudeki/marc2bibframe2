@@ -57,7 +57,9 @@
         <xsl:otherwise>
           <xsl:for-each select="marc:subfield[@code='u']">
             <xsl:element name="bf:supplementaryContent">
-              <xsl:attribute name="rdf:resource"><xsl:value-of select="."/></xsl:attribute>
+              <bflc:locator>
+                <xsl:attribute name="rdf:resource"><xsl:value-of select="."/></xsl:attribute>
+              </bflc:locator>
             </xsl:element>
           </xsl:for-each>
         </xsl:otherwise>
@@ -187,21 +189,25 @@
     <xsl:param name="pProp"/>
     <xsl:param name="instanceid"/>
     <xsl:choose>
-      <xsl:when test="$serialization='rdfxml' and marc:subfield[@code='z' or @code='y' or @code='3']">
+      <xsl:when test="$serialization='rdfxml'">
         <xsl:for-each select="marc:subfield[@code='u']">
           <xsl:element name="{$pProp}">
-            <xsl:if test="$pProp = 'bf:supplementaryContent'">
-              <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
+            <xsl:if test=../"marc:subfield[@code='z' or @code='y' or @code='3']">
+              <rdfs:Resource>
+                <xsl:if test="$pProp = bf:supplementaryContent">
+                  <bflc:locator>
+                    <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
+                  </bflc:locator>
+                </xsl:if>
+                <xsl:for-each select="../marc:subfield[@code='z' or @code='y' or @code='3']">
+                  <bf:note>
+                    <bf:Note>
+                      <rdfs:label><xsl:value-of select="."/></rdfs:label>
+                    </bf:Note>
+                  </bf:note>
+                </xsl:for-each>
+              </rdfs:Resource>
             </xsl:if>
-            <rdfs:Resource>
-              <xsl:for-each select="../marc:subfield[@code='z' or @code='y' or @code='3']">
-                <bf:note>
-                  <bf:Note>
-                    <rdfs:label><xsl:value-of select="."/></rdfs:label>
-                  </bf:Note>
-                </bf:note>
-              </xsl:for-each>
-            </rdfs:Resource>
           </xsl:element>
         </xsl:for-each>
       </xsl:when>
