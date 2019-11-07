@@ -45,6 +45,7 @@
   <xsl:template match="marc:datafield[@tag='856']" mode="instance">
     <xsl:param name="recordid"/>
     <xsl:param name="serialization" select="'rdfxml'"/>
+    <xsl:param name="instanceid"/>
     <xsl:if test="marc:subfield[@code='u'] and @ind2='2'">
       <xsl:choose>
         <xsl:when test="$serialization = 'rdfxml' and marc:subfield[@code='z' or @code='y' or @code='3']">

@@ -212,6 +212,7 @@
           <xsl:apply-templates mode="instance">
             <xsl:with-param name="recordid" select="$recordid"/>
             <xsl:with-param name="serialization" select="$serialization"/>
+            <xsl:with-param name="instanceid" select="$instanceid"/>
           </xsl:apply-templates>
           <!-- pass the whole record through for series processing (490/8XX) -->
           <xsl:apply-templates select="." mode="hasSeries">
