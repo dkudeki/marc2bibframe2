@@ -58,9 +58,11 @@
         <xsl:otherwise>
           <xsl:for-each select="marc:subfield[@code='u']">
             <xsl:element name="bf:supplementaryContent">
-              <bflc:locator>
-                <xsl:attribute name="rdf:resource"><xsl:value-of select="."/></xsl:attribute>
-              </bflc:locator>
+              <rdfs:Resource>
+                <bflc:locator>
+                  <xsl:attribute name="rdf:resource"><xsl:value-of select="."/></xsl:attribute>
+                </bflc:locator>
+              </rdfs:Resource>
             </xsl:element>
           </xsl:for-each>
         </xsl:otherwise>
@@ -195,7 +197,7 @@
           <xsl:element name="{$pProp}">
             <xsl:if test="../marc:subfield[@code='z' or @code='y' or @code='3']">
               <rdfs:Resource>
-                <xsl:if test="$pProp = bf:supplementaryContent">
+                <xsl:if test="$pProp = 'bf:supplementaryContent'">
                   <bflc:locator>
                     <xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
                   </bflc:locator>
