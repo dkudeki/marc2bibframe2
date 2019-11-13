@@ -253,18 +253,7 @@
 		<bf:Item>
 			<xsl:attribute name="rdf:about">http://hdl.handle.net/2027/<xsl:value-of select="./marc:subfield[@code='u']"/></xsl:attribute>
 			<bf:itemOf>
-				<xsl:choose>
-					<xsl:when test="substring(../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')],1,7) = '(OCoLC)'">
-            <xsl:for-each select="../marc:datafield[@tag='035']/marc:subfield[@code='a' and contains(.,'(OCoLC)')]">
-              <xsl:if test="position() = '1'">
-                <xsl:attribute name="rdf:resource"><xsl:value-of select="$baseinstanceuri"/><xsl:value-of select="substring(.,8)"/></xsl:attribute>
-              </xsl:if>
-            </xsl:for-each>
-          </xsl:when>
-					<xsl:otherwise>
-						<xsl:attribute name="rdf:resource">_:b<xsl:value-of select="substring($recordid,20)"/></xsl:attribute>
-					</xsl:otherwise>
-				</xsl:choose>
+				<xsl:attribute name="rdf:resource"><xsl:value-of select="$instanceid"/></xsl:attribute>
 			</bf:itemOf>
 			<xsl:if test="./marc:subfield[@code='r']">
 				<bf:usageAndAccessPolicy>
