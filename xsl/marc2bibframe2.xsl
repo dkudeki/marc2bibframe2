@@ -229,6 +229,7 @@
 			<xsl:when test="$serialization = 'rdfxml'">
 				<xsl:apply-templates select="./marc:datafield[@tag='974']" mode="item">
 					<xsl:with-param name="recordid" select="$recordid"/>
+          <xsl:with-param name="instanceid" select="$instanceid"/>
 				</xsl:apply-templates>
 
         <xsl:apply-templates select="./marc:datafield[@tag='856']" mode="item">
@@ -248,6 +249,7 @@
 
   <xsl:template match="marc:datafield[@tag='974']" mode="item">
   	<xsl:param name="recordid"/>
+    <xsl:param name="instanceid"/>
 
   	<!-- generate main Item entity -->
 		<bf:Item>
@@ -264,9 +266,9 @@
 				</dct:accessRights>
 			</xsl:if>
       <xsl:if test="./marc:subfield[@code='a']">
-        <bf:accessProfile>
+        <htrc:accessProfile>
           <xsl:value-of select="./marc:subfield[@code='a']"/>
-        </bf:accessProfile>
+        </htrc:accessProfile>
       </xsl:if>
 			<xsl:if test="./marc:subfield[@code='s']">
 				<htrc:digitizationAgent>
