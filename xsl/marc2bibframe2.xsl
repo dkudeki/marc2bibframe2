@@ -263,6 +263,11 @@
 					<xsl:value-of select="./marc:subfield[@code='r']"/>
 				</dct:accessRights>
 			</xsl:if>
+      <xsl:if test="./marc:subfield[@code='a']">
+        <bf:accessProfile>
+          <xsl:value-of select="./marc:subfield[@code='a']"/>
+        </bf:accessProfile>
+      </xsl:if>
 			<xsl:if test="./marc:subfield[@code='s']">
 				<htrc:digitizationAgent>
 					<xsl:attribute name="rdf:resource">https://www.hathitrust.org/institution_identifiers#<xsl:value-of select="./marc:subfield[@code='s']"/></xsl:attribute>
