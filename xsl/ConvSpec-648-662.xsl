@@ -115,7 +115,29 @@
       <xsl:when test="$serialization = 'rdfxml'">
         <xsl:element name="{$vProp}">
           <xsl:element name="{$vResource}">
-            <xsl:attribute name="rdf:about"><xsl:value-of select="$pTopicUri"/></xsl:attribute>
+            <xsl:choose>
+              <xsl:when test="marc:subfield[@code='0']">
+                <xsl:if test="substring(substring-after(marc:subfield[@code='0'],')'),1,3) = 'fst'">
+                  <xsl:variable name="fast_code">
+                    <xsl:call-template name="chopPunctuation">
+                      <xsl:with-param name="chopString" select="substring(substring-after(marc:subfield[@code='0'],')'),4)"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <xsl:attribute name="rdf:about">http://experimental.worldcat.org/fast/<xsl:value-of select="$fast_code"/>/</xsl:attribute>
+                </xsl:if>
+              </xsl:when>
+              <xsl:when test="marc:subfield[@code='a']">
+                <xsl:variable name="encoded_value">
+                  <xsl:call-template name="urlEncode">
+                    <xsl:with-param name="rawString" select="marc:subfield[@code='a']"/>
+                  </xsl:call-template>
+                </xsl:variable>
+                <xsl:attribute name="rdf:about">http://catalogdata.library.illinois.edu/lod/entities/GenreForm/ht/<xsl:value-of select="$encoded_value"/></xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="rdf:about"><xsl:value-of select="$pTopicUri"/></xsl:attribute>
+              </xsl:otherwise>
+            </xsl:choose>
             <rdf:type>
               <xsl:attribute name="rdf:resource"><xsl:value-of select="concat($madsrdf,$vMADSClass)"/></xsl:attribute>
             </rdf:type>

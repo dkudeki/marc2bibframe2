@@ -237,6 +237,23 @@
   </xsl:template>
 
   <!--
+    Replace spaces with %20 for generating URLs
+  -->
+  <xsl:template name="urlEncode">
+    <xsl:param name="rawString"/>
+    <xsl:choose>
+      <xsl:when test="contains($rawString,' ')">
+        <xsl:call-template name="urlEncode">
+          <xsl:with-param name="rawString" select="concat(substring-before($rawString,' '),'%20',substring-after($rawString,' '))"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise><xsl:value-of select="$rawString"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+
+  <!--
       convert a date string as from the 033/263 to an EDTF date
       (https://www.loc.gov/standards/datetime/pre-submission.html)
       with one difference - use 'X' for unspecified digits
